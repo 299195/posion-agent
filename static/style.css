@@ -83,3 +83,34 @@ main{max-width:1600px;margin:0 auto;padding:26px 30px 38px}.page-heading{display
 /* One explicit teaching-demo state: no end-user mode selector, but the boundary stays visible. */
 .teaching-mode-banner{display:flex;align-items:center;gap:9px;min-height:42px;padding:7px 20px;border-bottom:1px solid #ebd29d;background:#fffaf0}.teaching-mode-banner strong{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;background:#fff0cd;color:#865400;font-size:9px;white-space:nowrap}.teaching-mode-banner span{min-width:0;color:#7a6540;font-size:9px;line-height:1.45}
 @media(max-width:700px){.teaching-mode-banner{align-items:flex-start;flex-direction:column;gap:4px;padding:8px 14px}}
+
+/* Visual polish: calm editorial surface, clearer hierarchy, and stronger interaction states. */
+:root{--bg:#f5f7fb;--line:#e5eaf2;--ink:#18243a;--muted:#718096;--blue:#356be1;--shadow:0 14px 36px rgba(28,48,82,.07)}
+body{background:radial-gradient(circle at 8% 0%,#eef4ff 0,transparent 28rem),linear-gradient(180deg,#f6f8fc 0%,#f4f6fa 100%);letter-spacing:.005em}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;background-image:linear-gradient(rgba(76,105,155,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(76,105,155,.035) 1px,transparent 1px);background-size:36px 36px;mask-image:linear-gradient(180deg,#000,transparent 80%)}
+.app-header{background:linear-gradient(110deg,#101f39 0%,#172d50 64%,#203b67 100%);box-shadow:0 8px 24px rgba(14,30,57,.2)}
+.brand-mark{border-radius:11px;background:linear-gradient(145deg,#6d99ff,#2d5bd2);box-shadow:0 7px 18px rgba(67,112,225,.3),inset 0 0 0 1px rgba(255,255,255,.2)}
+.brand h1{letter-spacing:.01em}.header-course{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.08);backdrop-filter:blur(10px)}
+.nav-button{transition:color .18s ease,background .18s ease}.nav-button:hover{background:rgba(255,255,255,.06)}
+.panel,.chat-workspace{border-color:#e2e8f1;box-shadow:0 16px 38px rgba(27,47,80,.075)}
+.chat-workspace{background:rgba(255,255,255,.92);backdrop-filter:blur(12px)}
+.chat-sidebar{background:linear-gradient(180deg,#f8faff 0%,#f5f7fb 100%)}
+.chat-main{background:rgba(255,255,255,.96)}
+.chat-header{background:rgba(255,255,255,.88)}
+.chat-agent-avatar,.message-avatar{background:linear-gradient(145deg,#5d8cff,#2e5dcd);box-shadow:0 7px 16px rgba(47,98,216,.2)}
+.new-chat-button,.secondary-button,.quick-prompts button{transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease}
+.new-chat-button:hover,.secondary-button:hover,.quick-prompts button:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(43,76,134,.1)}
+.primary-outline{box-shadow:0 4px 12px rgba(53,107,225,.08)}
+.teaching-mode-banner{min-height:38px;padding-top:6px;padding-bottom:6px;background:linear-gradient(90deg,#fffaf0,#fffdf8);border-bottom-color:#f0dfb7}
+.teaching-mode-banner strong{background:#fff0cf;box-shadow:inset 0 0 0 1px rgba(190,139,42,.12)}
+.chat-conversation{background:radial-gradient(circle at 50% -10%,#f4f7ff 0,transparent 35%),#fff}
+.assistant-message:first-child .message-body strong{letter-spacing:.01em}
+.quick-prompts button{box-shadow:0 2px 7px rgba(37,58,92,.04)}
+.composer-row{background:#fff;box-shadow:0 8px 24px rgba(22,43,78,.08)}
+.send-button{box-shadow:0 7px 15px rgba(47,98,216,.24);transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}
+.send-button:hover{transform:translateY(-1px);filter:brightness(1.04);box-shadow:0 10px 20px rgba(47,98,216,.28)}
+.chat-history-item{transition:background .18s ease,border-color .18s ease,transform .18s ease}.chat-history-item:hover{transform:translateX(2px)}
+.metric-card,.result-card,.analysis-verdict{box-shadow:0 10px 24px rgba(28,48,82,.055)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid rgba(53,107,225,.24);outline-offset:2px}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#cbd5e3;border:2px solid transparent;border-radius:99px;background-clip:padding-box}::-webkit-scrollbar-thumb:hover{background:#aebdd2;border:2px solid transparent;background-clip:padding-box}
+@media(max-width:650px){body:before{background-size:28px 28px}.chat-workspace{box-shadow:0 10px 24px rgba(27,47,80,.08)}.chat-header-actions{gap:2px}.chat-header-actions .secondary-button{border-radius:6px}.composer-row{box-shadow:0 6px 18px rgba(22,43,78,.08)}}
