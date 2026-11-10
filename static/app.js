@@ -519,6 +519,11 @@ function configureBackend() {
     : "离线彩排使用确定性结果，适合演示相同证据链，不调用外部模型。";
   $("agent-model").textContent = real ? config.model_defaults.model : "离线彩排引擎";
   $("agent-connection").textContent = real && config.model_defaults.key_available ? "● Qwen API 已配置" : real ? "○ 等待 API Key" : "● 本地可用";
+  $("mode-summary").textContent = vulnerable
+    ? "仅限合成 PDF 的隔离课堂：模拟来源隔离缺陷，工具分可能偏离逐题合计。"
+    : real
+      ? "学生 PDF 只作为作答内容；登记分应与逐题合计一致。"
+      : "不调用外部模型，仅用于可重复的本地流程演示。";
 }
 
 async function init() {

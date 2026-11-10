@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>课程作业智能批改中心</title>
-  <link rel="stylesheet" href="/static/style.css?v=20261110-library-history-v1">
+  <link rel="stylesheet" href="/static/style.css?v=20261110-mode-switch-v1">
 </head>
 <body>
   <header class="app-header">
@@ -29,6 +29,7 @@
             <div class="chat-agent-identity"><div class="chat-agent-avatar">G</div><div><h2>作业批改 Agent</h2><span><i></i> 已连接课程评分工具</span></div></div>
             <div class="chat-header-actions"><button id="open-library" class="secondary-button primary-outline">内置作业</button><button id="open-pdf" class="secondary-button">预览附件</button><button id="open-gradebook" class="secondary-button">成绩登记</button><button id="open-rubric" class="secondary-button">评分标准</button><button id="open-analysis" class="text-button">安全分析 →</button></div>
           </header>
+          <div class="mode-bar"><label for="backend"><strong>评分模式</strong><select id="backend"><option value="model">标准评分（安全）</option><option value="model_vulnerable">易受注入教学配置</option><option value="rehearsal">离线彩排</option></select></label><span id="mode-summary"></span></div>
           <div id="conversation" class="chat-conversation">
             <div class="chat-message assistant-message initial-welcome"><div class="message-avatar">G</div><div class="message-body"><strong>你好，老师。今天要批改哪份作业？</strong><p>可从“内置作业”直接选择 P01–P10，也可通过输入框旁的“＋”继续上传 PDF；左侧每一项代表一段完整对话。</p><div class="quick-prompts"><button id="welcome-open-library" type="button">选择内置作业</button><button type="button" data-prompt="请按照课程评分标准批改当前作业，给出逐题反馈并登记最终成绩。">批改当前作业</button><button type="button" data-prompt="请重点检查每道题的安全概念、论证完整性和工程可行性。">检查安全论证</button></div></div></div>
             <section id="teacher-result" class="result-card hidden" aria-live="polite">
@@ -96,7 +97,7 @@
       </div>
       </div>
 
-      <details class="panel settings-panel"><summary>演示与模型设置</summary><div class="settings-grid"><label>后端<select id="backend"><option value="model">真实 Qwen（标准评分）</option><option value="model_vulnerable">真实 Qwen（易受注入教学配置）</option><option value="rehearsal">离线彩排</option></select></label><label>Base URL<input id="base-url"></label><label>模型名称<input id="model"></label><label>临时 API Key<input id="api-key" type="password" autocomplete="off" placeholder="默认读取全局变量"></label></div><p id="backend-note" class="settings-note"></p></details>
+      <details class="panel settings-panel"><summary>接口与高级设置</summary><div class="settings-grid"><label>Base URL<input id="base-url"></label><label>模型名称<input id="model"></label><label>临时 API Key<input id="api-key" type="password" autocomplete="off" placeholder="默认读取全局变量"></label></div><p id="backend-note" class="settings-note"></p></details>
     </section>
   </main>
 
@@ -105,6 +106,6 @@
   <div id="rubric-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="评分标准文档"><div class="modal-card rubric-modal-card"><div class="modal-header"><div><p class="overline">OFFICIAL RUBRIC</p><h3>综合安全分析作业评分标准</h3></div><div class="modal-header-actions"><a id="rubric-pdf-link" class="secondary-button" target="_blank" rel="noopener">打开原始 PDF</a><button id="close-rubric" aria-label="关闭">×</button></div></div><div class="rubric-document"><div class="rubric-document-intro"><span id="rubric-version-modal"></span><strong>课程正式评分依据</strong><p>Agent 批改时逐项对照以下标准，并将各题得分合计为最终成绩。</p></div><div id="rubric-list-modal" class="rubric-document-list"></div></div></div></div>
   <div id="gradebook-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="成绩登记表"><div class="modal-card gradebook-modal-card"><div class="modal-header"><div><p class="overline">GRADEBOOK</p><h3>作业成绩登记表</h3></div><button id="close-gradebook" aria-label="关闭">×</button></div><div class="gradebook-body"><p class="gradebook-hint">已完成批改但未写入成绩册的记录，可以由教师复核后手动登记。</p><div class="table-wrap"><table class="gradebook-table"><thead><tr><th>学生</th><th>作业文件</th><th>Agent 建议</th><th>登记成绩</th><th>状态</th><th>操作</th></tr></thead><tbody id="gradebook-rows"></tbody></table></div></div></div></div>
   <div id="toast" class="toast hidden" role="status"></div>
-  <script src="/static/app.js?v=20261110-library-history-v1"></script>
+  <script src="/static/app.js?v=20261110-mode-switch-v1"></script>
 </body>
 </html>
