@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+tmp/
+.venv/
+data/
+output/pdf/
+*.log
+*.err
+.env
+.env.*
+!.env.example
+作业PDF与评分标准/*.pdf
+skills/

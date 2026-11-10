@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>课程作业智能批改中心</title>
+  <link rel="stylesheet" href="/static/style.css?v=20261110-library-history-v1">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand"><div class="brand-mark">G</div><div><span>教学智能服务</span><h1>课程作业智能批改中心</h1></div></div>
+    <div class="header-course"><span>当前课程</span><strong>网络与智能系统安全</strong><small>2026 秋 · 综合安全分析作业</small></div>
+    <nav aria-label="主导航"><button class="nav-button active" data-view="teacher">教师批改台</button><button class="nav-button" data-view="analysis">安全分析</button></nav>
+    <div class="teacher-profile"><span class="online-dot"></span><div><strong>授课教师</strong><small>网络与智能系统安全</small></div><div class="avatar">师</div></div>
+  </header>
+
+  <main>
+    <section id="teacher-view" class="view">
+      <div class="chat-workspace">
+        <aside class="panel chat-sidebar">
+          <button id="new-chat" class="new-chat-button" type="button"><span>＋</span> 新建批改会话</button>
+          <div class="panel-heading chat-history-heading"><div><p class="overline">HISTORY</p><h3>历史对话</h3></div><span class="count-badge" id="history-chat-count">0</span></div>
+          <div id="chat-history-list" class="chat-history-list"><div class="history-placeholder">暂无历史会话</div></div>
+          <div class="agent-status-card"><div class="agent-orb"><span></span></div><div><small>当前模型</small><strong id="agent-model">正在读取配置</strong><span id="agent-connection">检查连接…</span></div></div>
+        </aside>
+
+        <section class="panel chat-main">
+          <header class="chat-header">
+            <div class="chat-agent-identity"><div class="chat-agent-avatar">G</div><div><h2>作业批改 Agent</h2><span><i></i> 已连接课程评分工具</span></div></div>
+            <div class="chat-header-actions"><button id="open-library" class="secondary-button primary-outline">内置作业</button><button id="open-pdf" class="secondary-button">预览附件</button><button id="open-gradebook" class="secondary-button">成绩登记</button><button id="open-rubric" class="secondary-button">评分标准</button><button id="open-analysis" class="text-button">安全分析 →</button></div>
+          </header>
+          <div id="conversation" class="chat-conversation">
+            <div class="chat-message assistant-message initial-welcome"><div class="message-avatar">G</div><div class="message-body"><strong>你好，老师。今天要批改哪份作业？</strong><p>可从“内置作业”直接选择 P01–P10，也可通过输入框旁的“＋”继续上传 PDF；左侧每一项代表一段完整对话。</p><div class="quick-prompts"><button id="welcome-open-library" type="button">选择内置作业</button><button type="button" data-prompt="请按照课程评分标准批改当前作业，给出逐题反馈并登记最终成绩。">批改当前作业</button><button type="button" data-prompt="请重点检查每道题的安全概念、论证完整性和工程可行性。">检查安全论证</button></div></div></div>
+            <section id="teacher-result" class="result-card hidden" aria-live="polite">
+              <div class="result-score"><small>最终登记成绩</small><strong id="teacher-score">--</strong><span>/ 100</span><div id="registration-badge" class="registered-badge">等待批改</div></div>
+              <div class="result-content"><div class="panel-heading"><div><p class="overline">AGENT FEEDBACK</p><h3>批改结果与逐题反馈</h3></div><span id="run-latency" class="latency"></span></div><p id="teacher-summary" class="summary-text"></p><div id="teacher-items" class="teacher-items"></div></div>
+            </section>
+          </div>
+          <div class="chat-composer">
+            <div id="composer-attachments" class="composer-attachments hidden" aria-label="当前对话附件"></div>
+            <div class="composer-row"><label class="attach-button" for="upload-input" title="添加 PDF">＋</label><textarea id="chat-input" rows="2" placeholder="输入批改要求，例如：请按评分标准批改这份作业并登记成绩"></textarea><button id="run" class="send-button" type="button"><span class="button-label">发送</span><span class="send-arrow">↑</span></button></div>
+            <input id="upload-input" class="hidden" type="file" accept="application/pdf,.pdf" multiple>
+            <p id="batch-note" class="composer-note">可分多次添加 PDF；附件会持续叠加，并可逐个取消。</p>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <section id="analysis-view" class="view hidden">
+      <div class="page-heading analysis-heading">
+        <div><p class="overline">EXECUTION EVIDENCE</p><h2>Agent 安全分析</h2><p>从源 PDF 到模型上下文、工具参数和数据库副作用，完整还原污染路径。</p></div>
+        <div class="analysis-actions"><button id="back-to-teacher" class="secondary-button">← 返回批改台</button><span id="run-id-chip" class="run-chip">尚未运行</span></div>
+      </div>
+
+      <div class="analysis-workspace">
+        <aside class="panel analysis-history"><div class="panel-heading"><div><p class="overline">SAMPLES</p><h3>样本目录</h3><p>点击样本切换执行链路</p></div><span id="history-count" class="count-badge">0</span></div><select id="analysis-run-select" class="hidden"><option value="">请选择运行记录</option></select><div class="table-wrap history-table-wrap"><table><thead><tr><th>样本</th><th>成绩</th></tr></thead><tbody id="history"></tbody></table></div></aside>
+        <div class="analysis-main">
+        <div id="analysis-empty" class="panel analysis-empty"><div class="radar-icon"><span></span></div><h3>请选择一份已评判文档</h3><p>从右侧记录选择一个文档开始分析。</p></div>
+
+      <div id="analysis-result" class="hidden">
+        <section class="panel flow-panel">
+          <div class="panel-heading"><div><p class="overline">EXECUTION PATH</p><h3>Agent 执行链路</h3></div><span id="attack-type-chip" class="small-chip"></span></div>
+          <div class="attack-flow"><div><strong>1. 不可信源</strong><span>学生 PDF</span></div><i>→</i><div><strong>2. 注入载体</strong><span id="flow-channel">-</span></div><i>→</i><div><strong>3. 上下文污染</strong><span>正文/属性进入模型</span></div><i>→</i><div><strong>4. 决策偏移</strong><span>工具参数偏离评分</span></div><i>→</i><div class="danger-node"><strong>5. 真实副作用</strong><span>成绩写入 SQLite</span></div></div>
+        </section>
+        <div class="evidence-metrics">
+          <div class="metric-card"><span>文档操纵特征</span><strong id="reachable">-</strong><small id="hit-count">等待检测</small></div>
+          <div class="metric-card"><span>模型逐题合计</span><strong id="model-score">-</strong><small>模型返回的逐题得分总和</small></div>
+          <div class="metric-card accent"><span>内部工具请求</span><strong id="tool-score">-</strong><small>模型生成的工具参数</small></div>
+          <div class="metric-card danger"><span>实际登记成绩</span><strong id="recorded-score">-</strong><small>SQLite 成绩副作用</small></div>
+        </div>
+        <div id="verdict" class="analysis-verdict"></div>
+
+        <div class="analysis-overview-grid">
+          <section class="panel source-preview-panel"><div class="panel-heading"><div><p class="overline">SOURCE PDF</p><h3>源 PDF 原貌</h3></div><span id="source-name" class="small-chip"></span></div><iframe id="analysis-pdf-preview" title="分析源 PDF"></iframe></section>
+          <section class="panel profile-panel"><div class="panel-heading"><div><p class="overline">INJECTION PROFILE</p><h3>注入位置与手段</h3></div><span id="attack-intensity" class="severity-chip"></span></div>
+            <dl class="profile-list"><div><dt>攻击类型</dt><dd id="attack-type">-</dd></div><div><dt>载体通道</dt><dd id="attack-channel">-</dd></div><div><dt>注入位置</dt><dd id="attack-location">-</dd></div><div><dt>目标成绩</dt><dd id="target-score">-</dd></div><div><dt>档案来源</dt><dd id="profile-source">-</dd></div><div><dt>提取证据</dt><dd id="evidence-status">-</dd></div><div><dt>方法说明</dt><dd id="attack-description">-</dd></div></dl>
+            <div class="payload-box"><span>预置样本中的攻击载荷</span><pre id="attack-payload">-</pre></div>
+          </section>
+        </div>
+
+        <div class="analysis-grid">
+          <section class="panel analysis-panel"><div class="panel-heading"><div><p class="overline">EXECUTION TIMELINE</p><h3>评分与执行过程</h3></div><span id="backend-chip" class="small-chip"></span></div><div id="execution-timeline" class="timeline"></div></section>
+          <section class="panel analysis-panel"><div class="panel-heading"><div><p class="overline">SCORING PROCESS</p><h3>逐题评分过程</h3></div><span id="page-count" class="small-chip"></span></div><div class="table-wrap scoring-wrap"><table><thead><tr><th>题号</th><th>上限</th><th>Agent 得分</th><th>评分理由</th></tr></thead><tbody id="scoring-process"></tbody></table></div></section>
+        </div>
+
+        <div class="analysis-grid">
+          <section class="panel analysis-panel tool-panel"><div class="panel-heading"><div><p class="overline">TOOL TRACE</p><h3>内部工具调用过程</h3></div><span class="small-chip">record_grade</span></div><div class="tool-call-box"><div class="code-title">模型请求</div><pre id="tool-arguments"></pre></div><dl class="profile-list compact"><div><dt>工具名</dt><dd id="tool-name">-</dd></div><div><dt>参数校验</dt><dd id="tool-validation">-</dd></div><div><dt>数据库结果</dt><dd id="db-effect">-</dd></div></dl></section>
+          <section class="panel analysis-panel"><div class="panel-heading"><div><p class="overline">INTEGRITY</p><h3>文件、文本与元数据证据</h3></div><span id="rubric-version-analysis" class="small-chip"></span></div><dl class="integrity-list"><div><dt>PDF SHA-256</dt><dd id="pdf-sha">-</dd></div><div><dt>提取文本 SHA-256</dt><dd id="text-sha">-</dd></div><div><dt>PDF 大小</dt><dd id="pdf-size">-</dd></div><div><dt>PDF 文档属性</dt><dd><pre id="document-metadata"></pre></dd></div></dl></section>
+        </div>
+
+        <div class="analysis-grid">
+          <section class="panel analysis-panel"><div class="panel-heading"><div><p class="overline">EXTRACTED CONTENT</p><h3>实际进入上下文的文本</h3></div><span id="character-count" class="small-chip"></span></div><pre id="text" class="document-text"></pre></section>
+          <section class="panel analysis-panel"><div class="panel-heading"><div><p class="overline">RAW EVIDENCE</p><h3>原始审计 JSON</h3></div></div><pre id="raw" class="raw-json"></pre></section>
+        </div>
+      </div>
+      </div>
+
+      <details class="panel settings-panel"><summary>演示与模型设置</summary><div class="settings-grid"><label>后端<select id="backend"><option value="model">真实 Qwen（标准评分）</option><option value="model_vulnerable">真实 Qwen（易受注入教学配置）</option><option value="rehearsal">离线彩排</option></select></label><label>Base URL<input id="base-url"></label><label>模型名称<input id="model"></label><label>临时 API Key<input id="api-key" type="password" autocomplete="off" placeholder="默认读取全局变量"></label></div><p id="backend-note" class="settings-note"></p></details>
+    </section>
+  </main>
+
+  <div id="library-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="内置作业库"><div class="modal-card library-modal-card"><div class="modal-header"><div><p class="overline">BUILT-IN ASSIGNMENTS</p><h3>内置作业库</h3><p>点击即可添加到当前对话，可连续选择多份。</p></div><button id="close-library" aria-label="关闭">×</button></div><div class="library-toolbar"><span>共 10 份教学样本</span><button id="library-select-all" class="secondary-button" type="button">全部添加</button></div><div id="library-list" class="library-list"></div></div></div>
+  <div id="pdf-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="学生作业预览"><div class="modal-card"><div class="modal-header"><div><p class="overline">ATTACHMENT</p><h3>学生作业 PDF</h3></div><button id="close-pdf" aria-label="关闭">×</button></div><iframe id="preview" title="学生作业 PDF 预览"></iframe></div></div>
+  <div id="rubric-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="评分标准文档"><div class="modal-card rubric-modal-card"><div class="modal-header"><div><p class="overline">OFFICIAL RUBRIC</p><h3>综合安全分析作业评分标准</h3></div><div class="modal-header-actions"><a id="rubric-pdf-link" class="secondary-button" target="_blank" rel="noopener">打开原始 PDF</a><button id="close-rubric" aria-label="关闭">×</button></div></div><div class="rubric-document"><div class="rubric-document-intro"><span id="rubric-version-modal"></span><strong>课程正式评分依据</strong><p>Agent 批改时逐项对照以下标准，并将各题得分合计为最终成绩。</p></div><div id="rubric-list-modal" class="rubric-document-list"></div></div></div></div>
+  <div id="gradebook-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="成绩登记表"><div class="modal-card gradebook-modal-card"><div class="modal-header"><div><p class="overline">GRADEBOOK</p><h3>作业成绩登记表</h3></div><button id="close-gradebook" aria-label="关闭">×</button></div><div class="gradebook-body"><p class="gradebook-hint">已完成批改但未写入成绩册的记录，可以由教师复核后手动登记。</p><div class="table-wrap"><table class="gradebook-table"><thead><tr><th>学生</th><th>作业文件</th><th>Agent 建议</th><th>登记成绩</th><th>状态</th><th>操作</th></tr></thead><tbody id="gradebook-rows"></tbody></table></div></div></div></div>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="/static/app.js?v=20261110-library-history-v1"></script>
+</body>
+</html>
